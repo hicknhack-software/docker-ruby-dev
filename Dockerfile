@@ -4,8 +4,6 @@ ARG BASE_IMAGE_TAG=latest
 
 FROM ruby:${BASE_IMAGE_TAG}
 
-LABEL maintainer "Michael Baudino <michael.baudino@alpine-lab.com>"
-
 # Explicitely define locale
 # as advised in https://github.com/docker-library/docs/blob/master/ruby/content.md#encoding
 ENV LANG="C.UTF-8"
@@ -48,6 +46,7 @@ RUN set -eux; \
         apk add --no-cache \
           alpine-sdk \
           openssh \
+          curl \
           jq \
           nano \
           nodejs \
