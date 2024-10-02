@@ -1,4 +1,6 @@
-# `alpinelab/ruby-dev` [![Docker Stars](https://img.shields.io/docker/stars/alpinelab/ruby-dev?style=flat-square)](https://hub.docker.com/r/alpinelab/ruby-dev/) [![Docker Pulls](https://img.shields.io/docker/pulls/alpinelab/ruby-dev.svg?style=flat-square)](https://hub.docker.com/r/alpinelab/ruby-dev/) [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/alpinelab/docker-ruby-dev/docker-build.yml?style=flat-square)](https://github.com/alpinelab/docker-ruby-dev/actions/workflows/docker-build.yml)
+# `hnhs/ruby-dev`
+
+A fork from `alpine-labs/ruby-dev`.
 
 The main goal of this project is to have a single Docker image to develop all your Ruby projects, with **all dependencies contained inside Docker** (like gems, NPM packages or even Ruby itself, that won't pollute your host environment) and without anything specific to the project in the Docker image (the **codebase is mounted directly from the host filesystem into the container**, thus you'll never have to build the image when you add a gem or change some code).
 
@@ -33,7 +35,7 @@ volumes:
   config:       { driver: local }
 services:
   app:
-    image: alpinelab/ruby-dev
+    image: hnhs/ruby-dev
     ports: ["5000:5000"]
     volumes:
       - .:/app
@@ -42,7 +44,7 @@ services:
       - config:/config
 ```
 
-> 💡 Feel free to use `alpinelab/ruby-dev:<ruby-version>`: we support [multiple Ruby versions](.github/workflows/docker-build.yml) [as Docker tags](https://hub.docker.com/r/alpinelab/ruby-dev/tags/)
+> 💡 Feel free to use `hnhs/ruby-dev:<ruby-version>`: we support [multiple Ruby versions](.github/workflows/docker-build.yml) [as Docker tags](https://hub.docker.com/r/hnhs/ruby-dev/tags/)
 > and Alpine Linux variants (append `-alpine` to image tag).
 
 <details>
@@ -150,9 +152,11 @@ The following Ruby versions are not maintained anymore:
 
 * Ruby 2.2 ([EOL](https://www.ruby-lang.org/en/news/2018/06/20/support-of-ruby-2-2-has-ended/)'d)
 
+⚠️ Note: This fork only contains the latest Ruby versions to minimize the effort. Feel free to open an issue if you need a different Ruby version.
+
 ## Contributing
 
-Contributions are indeed warmly welcome as [pull requests](https://github.com/alpinelab/docker-ruby-dev/pulls), or [issues](https://github.com/alpinelab/docker-ruby-dev/issues) ❤️
+Contributions are indeed warmly welcome as [pull requests](https://github.com/hicknhack-software/docker-ruby-dev/pulls), or [issues](https://github.com/hicknhack-software/docker-ruby-dev/issues) ❤️
 
 ## License
 
