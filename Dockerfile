@@ -9,7 +9,8 @@ FROM ruby:${BASE_IMAGE_TAG}
 ENV LANG="C.UTF-8"
 
 ARG RUBYGEMS_VERSION_ARG="" \
-    BUNDLER_VERSION_ARG=""
+    BUNDLER_VERSION_ARG="" \
+    DEBIAN_FRONTEND=noninteractive
 
 # Define dependencies base versions
 # Note: NodeJS is capped to 14.x on Jessie and 16.x on Stretch (due to `libc` requirements)
@@ -72,8 +73,8 @@ RUN <<INSTALL_DEPENDENCIES
       fi
       \
       # Detect Debian version
-      apt-get update
-      apt-get install --assume-yes --no-install-recommends --no-install-suggests --force-yes \
+      apt-get -qq --yes update -o=Dpkg::Use-Pty=0
+      apt-get -qq --yes install -o=Dpkg::Use-Pty=0 --no-install-recommends --no-install-suggests \
         apt-transport-https \
         lsb-release
 
@@ -82,7 +83,7 @@ RUN <<INSTALL_DEPENDENCIES
       # Fix LetsEncrypt expired CA on older Debian releases
       case ${debianReleaseCodename} in
         jessie|buster|stretch)
-          apt-get install --assume-yes --no-install-recommends --no-install-suggests --force-yes \
+          apt-get -qq --yes install -o=Dpkg::Use-Pty=0 --no-install-recommends --no-install-suggests \
             ca-certificates \
             curl \
             $([ "${debianReleaseCodename}" = "jessie" ] && echo "libssl1.0.0")
@@ -117,8 +118,8 @@ RUN <<INSTALL_DEPENDENCIES
       esac | bash
       \
       # Install everything
-      apt-get update
-      apt-get install --assume-yes --no-install-recommends --no-install-suggests --force-yes \
+      apt-get -qq --yes update -o=Dpkg::Use-Pty=0
+      apt-get -qq --yes install -o=Dpkg::Use-Pty=0 --no-install-recommends --no-install-suggests \
         jq \
         nano \
         nodejs \
@@ -133,7 +134,7 @@ RUN <<INSTALL_DEPENDENCIES
       npm install --global yarn
       \
       # Install Heroku CLI (standalone tarball)
-      curl -sSL curl https://cli-assets.heroku.com/install.sh | sh
+      curl -sSL https://cli-assets.heroku.com/install.sh | sh
   esac
 INSTALL_DEPENDENCIES
 
