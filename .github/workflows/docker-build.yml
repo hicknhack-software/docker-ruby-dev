@@ -12,9 +12,10 @@ jobs:
       fail-fast: false
       matrix:
         ruby:
+          - 3.4.2
+          - 3.3.7
           - 3.3.6
-          - 3.3.5
-          - 3.2.6
+          - 3.2.7
         variant: ["", "-alpine"]
         exclude: []
         include: []
@@ -50,17 +51,17 @@ jobs:
             hnhs/ruby-dev:${{ matrix.ruby }}${{ matrix.variant }}
             ghcr.io/hicknhack-software/ruby-dev:${{ matrix.ruby }}${{ matrix.variant }}
 
-            ${{ matrix.ruby == '3.3.6' && format('hnhs/ruby-dev:latest{0}', matrix.variant) || '' }}
-            ${{ matrix.ruby == '3.3.6' && format('ghcr.io/hicknhack-software/ruby-dev:latest{0}', matrix.variant) || '' }}
+            ${{ matrix.ruby == '3.4.2' && format('hnhs/ruby-dev:latest{0}', matrix.variant) || '' }}
+            ${{ matrix.ruby == '3.4.2' && format('ghcr.io/hicknhack-software/ruby-dev:latest{0}', matrix.variant) || '' }}
 
-            ${{ matrix.ruby == '3.3.6' && format('hnhs/ruby-dev:3{0}', matrix.variant) || '' }}
-            ${{ matrix.ruby == '3.3.6' && format('ghcr.io/hicknhack-software/ruby-dev:3{0}', matrix.variant) || '' }}
+            ${{ matrix.ruby == '3.4.2' && format('hnhs/ruby-dev:3{0}', matrix.variant) || '' }}
+            ${{ matrix.ruby == '3.4.2' && format('ghcr.io/hicknhack-software/ruby-dev:3{0}', matrix.variant) || '' }}
 
-            ${{ matrix.ruby == '3.3.6' && format('hnhs/ruby-dev:3.3{0}', matrix.variant) || '' }}
-            ${{ matrix.ruby == '3.3.6' && format('ghcr.io/hicknhack-software/ruby-dev:3.3{0}', matrix.variant) || '' }}
+            ${{ matrix.ruby == '3.3.7' && format('hnhs/ruby-dev:3.3{0}', matrix.variant) || '' }}
+            ${{ matrix.ruby == '3.3.7' && format('ghcr.io/hicknhack-software/ruby-dev:3.3{0}', matrix.variant) || '' }}
 
-            ${{ matrix.ruby == '3.2.6' && format('ghcr.io/hicknhack-software/ruby-dev:3.2{0}', matrix.variant) || '' }}
-            ${{ matrix.ruby == '3.2.6' && format('hnhs/ruby-dev:3.2{0}', matrix.variant) || '' }}
+            ${{ matrix.ruby == '3.2.7' && format('ghcr.io/hicknhack-software/ruby-dev:3.2{0}', matrix.variant) || '' }}
+            ${{ matrix.ruby == '3.2.7' && format('hnhs/ruby-dev:3.2{0}', matrix.variant) || '' }}
 
           cache-from: type=gha
           cache-to: type=gha,mode=max
