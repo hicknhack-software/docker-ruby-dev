@@ -15,7 +15,7 @@ ARG RUBYGEMS_VERSION_ARG="" \
 # Define dependencies base versions
 # Note: NodeJS is capped to 14.x on Jessie and 16.x on Stretch (due to `libc` requirements)
 ENV NODE_VERSION="20" \
-    GOSU_VERSION="1.17"
+    GOSU_VERSION="1.19"
 
 # Define some default variables
 ENV PORT="5000" \
