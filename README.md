@@ -21,6 +21,23 @@ We try to use sane default conventions so you don't have to think about it, but 
 > * `yarn install` is run before any command, only if necessary
 > * you can [customise](RECIPES.md) the image with extra software
 
+## Latest images
+
+The latest versions built by the [Docker Build workflow](.github/workflows/docker-build.yml)
+are available from Docker Hub and GitHub Container Registry (GHCR). Size badges show
+the compressed download size for `linux/amd64` from Docker Hub.
+
+<!-- Keep tags in sync with the workflow matrix and refresh GHCR version links when images are republished. -->
+
+| Docker Hub | GitHub Container Registry | Size (`linux/amd64`) |
+| --- | --- | --- |
+| [hnhs/ruby-dev](https://hub.docker.com/r/hnhs/ruby-dev):[4.0.9](https://hub.docker.com/layers/hnhs/ruby-dev/4.0.9) | [ghcr.io/hicknhack-software/ruby-dev](https://github.com/hicknhack-software/docker-ruby-dev/pkgs/container/ruby-dev):[4.0.9](https://github.com/hicknhack-software/docker-ruby-dev/pkgs/container/ruby-dev/1478980483?tag=4.0.9) | ![4.0.9 image size](https://img.shields.io/docker/image-size/hnhs/ruby-dev/4.0.9?arch=amd64&label=size) |
+| [hnhs/ruby-dev](https://hub.docker.com/r/hnhs/ruby-dev):[4.0.9-alpine](https://hub.docker.com/layers/hnhs/ruby-dev/4.0.9-alpine) | [ghcr.io/hicknhack-software/ruby-dev](https://github.com/hicknhack-software/docker-ruby-dev/pkgs/container/ruby-dev):[4.0.9-alpine](https://github.com/hicknhack-software/docker-ruby-dev/pkgs/container/ruby-dev/1478914304?tag=4.0.9-alpine) | ![4.0.9-alpine image size](https://img.shields.io/docker/image-size/hnhs/ruby-dev/4.0.9-alpine?arch=amd64&label=size) |
+| [hnhs/ruby-dev](https://hub.docker.com/r/hnhs/ruby-dev):[3.4.12](https://hub.docker.com/layers/hnhs/ruby-dev/3.4.12) | [ghcr.io/hicknhack-software/ruby-dev](https://github.com/hicknhack-software/docker-ruby-dev/pkgs/container/ruby-dev):[3.4.12](https://github.com/hicknhack-software/docker-ruby-dev/pkgs/container/ruby-dev/1478986559?tag=3.4.12) | ![3.4.12 image size](https://img.shields.io/docker/image-size/hnhs/ruby-dev/3.4.12?arch=amd64&label=size) |
+| [hnhs/ruby-dev](https://hub.docker.com/r/hnhs/ruby-dev):[3.4.12-alpine](https://hub.docker.com/layers/hnhs/ruby-dev/3.4.12-alpine) | [ghcr.io/hicknhack-software/ruby-dev](https://github.com/hicknhack-software/docker-ruby-dev/pkgs/container/ruby-dev):[3.4.12-alpine](https://github.com/hicknhack-software/docker-ruby-dev/pkgs/container/ruby-dev/1478993029?tag=3.4.12-alpine) | ![3.4.12-alpine image size](https://img.shields.io/docker/image-size/hnhs/ruby-dev/3.4.12-alpine?arch=amd64&label=size) |
+| [hnhs/ruby-dev](https://hub.docker.com/r/hnhs/ruby-dev):[3.3.13](https://hub.docker.com/layers/hnhs/ruby-dev/3.3.13) | [ghcr.io/hicknhack-software/ruby-dev](https://github.com/hicknhack-software/docker-ruby-dev/pkgs/container/ruby-dev):[3.3.13](https://github.com/hicknhack-software/docker-ruby-dev/pkgs/container/ruby-dev/1479008814?tag=3.3.13) | ![3.3.13 image size](https://img.shields.io/docker/image-size/hnhs/ruby-dev/3.3.13?arch=amd64&label=size) |
+| [hnhs/ruby-dev](https://hub.docker.com/r/hnhs/ruby-dev):[3.3.13-alpine](https://hub.docker.com/layers/hnhs/ruby-dev/3.3.13-alpine) | [ghcr.io/hicknhack-software/ruby-dev](https://github.com/hicknhack-software/docker-ruby-dev/pkgs/container/ruby-dev):[3.3.13-alpine](https://github.com/hicknhack-software/docker-ruby-dev/pkgs/container/ruby-dev/1478950389?tag=3.3.13-alpine) | ![3.3.13-alpine image size](https://img.shields.io/docker/image-size/hnhs/ruby-dev/3.3.13-alpine?arch=amd64&label=size) |
+
 ## Usage
 
 ### Setup
