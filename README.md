@@ -154,6 +154,39 @@ The following Ruby versions are not maintained anymore:
 
 ⚠️ Note: This fork only contains the latest Ruby versions to minimize the effort. Feel free to open an issue if you need a different Ruby version.
 
+## Image updates
+
+The official `ruby` images do not have a fixed publication time. Docker Library's
+[version-update jobs](https://github.com/docker-library/oi-janky-groovy/blob/master/update.sh/dsl.groovy)
+check every six hours (`H H/6 * * *`, with Jenkins assigning the actual times).
+Images are published after changes are reviewed and built, and are also
+[rebuilt when their parent images change](https://github.com/docker-library/official-images#library-definition-files).
+The [publication pipeline](https://github.com/docker-library/faq#an-images-source-changed-in-git-now-what)
+has several stages, so a source commit or CI completion does not mean an image is available yet.
+
+Our [Docker Build workflow](.github/workflows/docker-build.yml) checks the published
+Ruby tags in its matrix every day at **00:37, 06:37, 12:37, and 18:37 UTC**. Each
+scheduled run builds only variants whose `linux/amd64` base-image digest or source
+revision differs from the labels on the corresponding `ruby-dev` image in either
+Docker Hub or GHCR. Changes only to other architectures, index annotations, or
+attestation manifests do not trigger builds. Missing images, missing labels, or
+an unverifiable downstream image trigger a build; an upstream lookup failure
+fails the job instead of reporting an unchanged image.
+
+Builds use the exact base digest checked and record it in the
+`org.opencontainers.image.base.digest` label, alongside
+`org.opencontainers.image.revision`. Comparing both registries also retries
+partially published builds. Existing images without these labels rebuild once.
+Pushes to `main` and manual workflow runs always build, so manual runs can also
+refresh development packages when the Ruby base is unchanged. Ruby patch versions
+remain explicitly selected in the workflow matrix.
+
+Run the change-detection tests with:
+
+```shell
+python3 -m unittest discover -s .github/scripts -p 'test_*.py'
+```
+
 ## Contributing
 
 Contributions are indeed warmly welcome as [pull requests](https://github.com/hicknhack-software/docker-ruby-dev/pulls), or [issues](https://github.com/hicknhack-software/docker-ruby-dev/issues) ❤️

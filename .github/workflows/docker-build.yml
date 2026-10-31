@@ -4,6 +4,19 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
+  # Official Ruby updates have no fixed publication time. Check published images
+  # every six hours, matching the upstream version-check cadence.
+  schedule:
+    - cron: "37 */6 * * *"
+
+permissions:
+  contents: read
+  packages: write
+
+# Serialize publishers to avoid overlapping pushes.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -16,8 +29,6 @@ jobs:
           - 3.4.12
           - 3.3.13
         variant: ["", "-alpine"]
-        exclude: []
-        include: []
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -39,12 +50,26 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Check upstream image
+        id: upstream
+        env:
+          BASE_IMAGE_TAG: ${{ matrix.ruby }}${{ matrix.variant }}
+          SOURCE_REVISION: ${{ github.sha }}
+          FORCE_BUILD: ${{ github.event_name != 'schedule' }}
+        run: python3 .github/scripts/check-base-image.py
+
       - uses: docker/build-push-action@v6
+        if: steps.upstream.outputs.changed == 'true'
         with:
           push: ${{ github.event_name != 'pull_request' }}
-          visibility: public
+          platforms: linux/amd64
+          pull: true
           build-args: |
-            BASE_IMAGE_TAG=${{ matrix.ruby }}${{ matrix.variant }}
+            BASE_IMAGE_TAG=${{ matrix.ruby }}${{ matrix.variant }}@${{ steps.upstream.outputs.base_digest }}
+          labels: |
+            org.opencontainers.image.base.name=docker.io/library/ruby:${{ matrix.ruby }}${{ matrix.variant }}
+            org.opencontainers.image.base.digest=${{ steps.upstream.outputs.base_digest }}
+            org.opencontainers.image.revision=${{ github.sha }}
 
           tags: |
             hnhs/ruby-dev:${{ matrix.ruby }}${{ matrix.variant }}
@@ -59,11 +84,11 @@ jobs:
             ${{ matrix.ruby == '4.0.9' && format('hnhs/ruby-dev:4.0{0}', matrix.variant) || '' }}
             ${{ matrix.ruby == '4.0.9' && format('ghcr.io/hicknhack-software/ruby-dev:4.0{0}', matrix.variant) || '' }}
 
-            ${{ matrix.ruby == '3.4.13' && format('hnhs/ruby-dev:3{0}', matrix.variant) || '' }}
-            ${{ matrix.ruby == '3.4.13' && format('ghcr.io/hicknhack-software/ruby-dev:3{0}', matrix.variant) || '' }}
+            ${{ matrix.ruby == '3.4.12' && format('hnhs/ruby-dev:3{0}', matrix.variant) || '' }}
+            ${{ matrix.ruby == '3.4.12' && format('ghcr.io/hicknhack-software/ruby-dev:3{0}', matrix.variant) || '' }}
 
-            ${{ matrix.ruby == '3.4.13' && format('hnhs/ruby-dev:3.4{0}', matrix.variant) || '' }}
-            ${{ matrix.ruby == '3.4.13' && format('ghcr.io/hicknhack-software/ruby-dev:3.4{0}', matrix.variant) || '' }}
+            ${{ matrix.ruby == '3.4.12' && format('hnhs/ruby-dev:3.4{0}', matrix.variant) || '' }}
+            ${{ matrix.ruby == '3.4.12' && format('ghcr.io/hicknhack-software/ruby-dev:3.4{0}', matrix.variant) || '' }}
 
             ${{ matrix.ruby == '3.3.13' && format('hnhs/ruby-dev:3.3{0}', matrix.variant) || '' }}
             ${{ matrix.ruby == '3.3.13' && format('ghcr.io/hicknhack-software/ruby-dev:3.3{0}', matrix.variant) || '' }}
